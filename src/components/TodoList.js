@@ -24,31 +24,36 @@ export default function TodoList() {
   };
   
   const handleSubmit = async (item) => {
-    const currentItems = { ...item, description: ' '};
-
-    try {
-      const response = await axios.post("https://api.nstack.in/v1/todos/", currentItems);
-      console.log("response from POST ---", response);
-      //return;
-      refreshList();
-    } catch (e) {
-      console.log("error",e)
+    //console.log('handleSubmit called...');
+    const currentItems = { ...item, "description": "" };
+    const itemsJSON = JSON.stringify(currentItems);
+    const headers = {
+      'Content-Type': 'application/json'
     }
+    
+    //const response = await axios.post('https://api.nstack.in/v1/todos/', itemsJSON)
+    const response = await axios.post('https://api.nstack.in/v1/todos/', itemsJSON, { "headers": headers })
+    console.log("response from POST ---", response);
+    refreshList();
   };
   
   const handleEdit = (item) => {
+    // console.log('handleEdit called...');
     alert("Edit :: " + JSON.stringify(item));
   };
 
-  const handleDelete = (item) => {
-    alert("Delete :: " + JSON.stringify(item));
+  const handleDelete = async (item) => {
+    //alert("Delete :: " + JSON.stringify(item));
+    const response = await axios.delete("https://api.nstack.in/v1/todos/"+item);
+    console.log("response deleted item", response);
+    refreshList();
   };
   
   return (
     <div>
       <TodoInput
         key={todoState._id}
-        handleSubmit={handleSubmit} />
+        handleSubmit = {handleSubmit} />
         <ul className="list-group my-2">
           {todoState?.map((item) => {
             return <TodoItem
@@ -59,7 +64,6 @@ export default function TodoList() {
               item={item} />
           })}
         </ul>
-    </div>
-      
+    </div>      
   );
 }

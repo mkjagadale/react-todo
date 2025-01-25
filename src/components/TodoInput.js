@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 export default function TodoInput({handleSubmit}) {
 
   const [title, setTitle] = useState('');
-  const [completed, setCompleted] = useState('');
-
-  /* const handleTodos = async(item) => {
-    const currentItems = { ...item, description: ' '};
-    try {
-      const response = await axios.post("https://api.nstack.in/v1/todos/", currentItems);
-    } catch (e) {
-      console.log("error",e)
-    }
+  const [completed, setCompleted] = useState(false);
+  
+  /* const onHandleSubmitChange = (item) => {
+    console.log('onHandleSubmitChange----', item)
+    handleSubmit(item);
   } */
 
   return (
@@ -35,13 +30,25 @@ export default function TodoInput({handleSubmit}) {
             name="completed"
             className="form-check-input"
             checked={completed}
-            onChange={(e) => setCompleted(e.target.value)}
+            onChange={(e) => setCompleted(e.target.checked)}
           />
           <label className="form-check-label">Completed</label>
         </div>
+        {/* <button type="submit"
+          className={
+            props.editItem ? "btn btn-success mt-3" : "btn btn-primary mt-3"
+          }
+          onClick={() => handleSubmit(activeItem)} >
+          { props.editItem ? "Edit" : "Add" }
+        </button> */}
+        {/* <button type="submit"
+          className="btn btn-success mt-3"
+          onClick={() => onHandleSubmitChange({title, is_completed: completed})} >
+          Add
+        </button> */}
         <button type="submit"
           className="btn btn-success mt-3"
-          onClick={() => handleSubmit({title, "is_completed":completed})} >
+          onClick={() => handleSubmit({title, is_completed: completed})} >
           Add
         </button>
       </form>
