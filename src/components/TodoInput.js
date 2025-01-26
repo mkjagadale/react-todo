@@ -46,7 +46,7 @@ export default function TodoInput({handleSubmit}) {
           onClick={() => onHandleSubmitChange({title, is_completed: completed})} >
           Add
         </button> */}
-        <button type="submit"
+        <button type="button"
           className="btn btn-success mt-3"
           onClick={() => handleSubmit({title, is_completed: completed})} >
           Add
